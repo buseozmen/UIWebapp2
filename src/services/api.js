@@ -3,7 +3,15 @@ const API_URL = "https://localhost:7202/api/Object";
 export async function getAllWkts() {
   const response = await fetch(API_URL);
   if (!response.ok) throw new Error("Veriler alınamadı.");
-  return await response.json();
+  
+  const result = await response.json();
+
+  // Eğer başarılı yanıt varsa ve result.success varsa sıralama yap
+  if (result.success && Array.isArray(result.data)) {
+    result.data.sort((a, b) => a.objectId - b.objectId);
+  }
+
+  return result;
 }
 
 export async function getWktById(id) {

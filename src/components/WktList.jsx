@@ -52,7 +52,7 @@ function WktList({ onEdit , refreshKey }) {
               <td>{item.name}</td>
               <td>{JSON.stringify(item.wkt.type)  + JSON.stringify(item.wkt.coordinates)}</td>
               <td>
-                <button className="edit" onClick={() => onEdit(item.wkt)}>Düzenle</button>
+                <button className="edit" onClick={() => onEdit(item)}>Güncelle</button>
                 <button className="delete" onClick={() => handleDelete(item.objectId)}>Sil</button>
               </td>
             </tr>

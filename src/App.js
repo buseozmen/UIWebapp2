@@ -22,15 +22,15 @@ function App() {
       <h1>Başarsoft Map App</h1>
       <MapView/>
       <div>
-        <button className="add" onClick={() => setModalOpen(true)}>Yeni WKT Ekle</button>
+        <button className="add" onClick={() => { setSelected(null); setModalOpen(true); }}>WKT Ekle</button>
       </div>
       <WktFormModal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSaved={refreshList}
+        onClose={() => { setModalOpen(false); setSelected(null); }}
+        onSaved={refresh}
+        currentItem={selected}
       />
-      <WktList refreshKey={refreshKey} />
-      
+      <WktList onEdit={(item) => { setSelected(item); setModalOpen(true); }} refreshKey={refreshKey} />
     </div>
   );
 }
