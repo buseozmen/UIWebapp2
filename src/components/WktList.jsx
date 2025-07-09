@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllWkts, deleteWkt } from "../services/api";
 
 
-function WktList({ onEdit , refreshKey }) {
+function WktList({ onEdit , refreshKey, onChanged }) {
   const [wkts, setWkts] = useState([]);
 
   const fetchData = async () => {
@@ -26,6 +26,7 @@ function WktList({ onEdit , refreshKey }) {
       const result = await deleteWkt(id);
       alert(result.message);
       fetchData();
+      onChanged?.();
     } catch (error) {
       alert(error.message);
     }

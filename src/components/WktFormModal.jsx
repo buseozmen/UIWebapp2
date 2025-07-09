@@ -2,7 +2,7 @@ import "../css/WktFormModal.css";
 import React, { useEffect, useState } from "react";
 import { addWkt, updateWkt } from "../services/api";
 
-function WktFormModal({ isOpen, onClose, onSaved, currentItem }) {
+function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
   const [name, setName] = useState("");
   const [wkt, setWkt] = useState("");
 
@@ -24,12 +24,16 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem }) {
       }
 
       setWkt(wktString);
-    } 
+    } else {
+      setWkt("");
+    }
+
   } else {
     setName("");
-    setWkt("");
+    // Eğer yeni kayıt ve harita üzerinden çizim geldiyse formu onunla doldur
+    setWkt(mapWkt || "");
   }
-}, [currentItem]);
+}, [currentItem, mapWkt]);
 
 
   const handleSubmit = async (e) => {
@@ -56,6 +60,7 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem }) {
         }
 
       onSaved();   // Listeyi yenile
+      window.dispatchEvent(new Event("wkt-draw-cancel")); // geçici çizimi temizle
       onClose();   // Modalı kapat
       setName("");
       setWkt("");
@@ -87,7 +92,9 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem }) {
           />
           <div className="modal-buttons">
             <button type="submit">{currentItem ? "Güncelle" : "Kaydet"}</button>
-            <button type="button" className="cancel" onClick={onClose}>İptal</button>
+            <button type="button" className="cancel" onClick={() => {
+                onClose();
+                window.dispatchEvent(new Event("wkt-draw-cancel"))}}>İptal</button>
           </div>
         </form>
       </div>
