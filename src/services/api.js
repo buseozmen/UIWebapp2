@@ -10,7 +10,6 @@ export async function getAllWkts() {
   if (result.success && Array.isArray(result.data)) {
     result.data.sort((a, b) => a.objectId - b.objectId);
   }
-
   return result;
 }
 

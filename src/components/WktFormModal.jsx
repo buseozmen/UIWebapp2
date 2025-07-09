@@ -35,15 +35,25 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (currentItem) {
-        // Güncelle
-        await updateWkt({ objectId: currentItem.objectId, name, wkt });
-        alert("Güncellendi");
-      } else {
-        // Yeni kayıt
-        await addWkt({ name, wkt });
-        alert("Eklendi");
-      }
+
+        let result;
+        if (currentItem) {
+        result = await updateWkt({ objectId: currentItem.objectId, name, wkt });
+        if (result.success) {
+            alert("Güncellendi");
+        } else {
+            alert("Güncelleme başarısız: " + result.message);
+            return;
+        }
+        } else {
+        result = await addWkt({ name, wkt });
+        if (result.success) {
+            alert("Eklendi");
+        } else {
+            alert("Ekleme başarısız: " + result.message);
+            return;
+        }
+        }
 
       onSaved();   // Listeyi yenile
       onClose();   // Modalı kapat
