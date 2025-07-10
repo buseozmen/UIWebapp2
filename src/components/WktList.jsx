@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getAllWkts, deleteWkt } from "../services/api";
+import DataTable from 'datatables.net-react';
+import DT from 'datatables.net-dt';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 
 function WktList({ onEdit , refreshKey, onChanged }) {
@@ -9,9 +13,9 @@ function WktList({ onEdit , refreshKey, onChanged }) {
     try {
       const result = await getAllWkts();
       if (result.success) setWkts(result.data);
-      else alert(result.message);
+      else toast.error(result.message);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -21,15 +25,27 @@ function WktList({ onEdit , refreshKey, onChanged }) {
 
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Bu kaydı silmek istediğine emin misin?")) return;
-    try {
+    const result = await Swal.fire({
+    title: "Emin misin?",
+    text: "Bu kaydı silmek istediğine emin misin?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Evet, sil!",
+    cancelButtonText: "İptal"
+    });
+
+    if (result.isConfirmed){
+      try {
       const result = await deleteWkt(id);
-      alert(result.message);
+      toast.success(result.message);
       fetchData();
       onChanged?.();
-    } catch (error) {
-      alert(error.message);
-    }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
   };
 
   return (

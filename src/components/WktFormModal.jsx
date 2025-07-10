@@ -1,5 +1,6 @@
 import "../css/WktFormModal.css";
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import { addWkt, updateWkt } from "../services/api";
 
 function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
@@ -44,17 +45,17 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
         if (currentItem) {
         result = await updateWkt({ objectId: currentItem.objectId, name, wkt });
         if (result.success) {
-            alert("Güncellendi");
+            toast.success("Güncellendi");
         } else {
-            alert("Güncelleme başarısız: " + result.message);
+            toast.error("Güncelleme başarısız: " + result.message);
             return;
         }
         } else {
         result = await addWkt({ name, wkt });
         if (result.success) {
-            alert("Eklendi");
+            toast.success("Eklendi");
         } else {
-            alert("Ekleme başarısız: " + result.message);
+            toast.error("Ekleme başarısız: " + result.message);
             return;
         }
         }
@@ -65,7 +66,7 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
       setName("");
       setWkt("");
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 

@@ -2,6 +2,8 @@ import React, { useState , useEffect } from "react";
 import WktList from "./components/WktList";
 import MapView from "./components/MapView";
 import WktFormModal from "./components/WktFormModal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 
 
@@ -52,6 +54,7 @@ function App() {
         mapWkt={wkt}
       />
       <WktList onEdit={(item) => { setSelected(item); setModalOpen(true); }} refreshKey={refreshKey}  onChanged={refresh} />
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
