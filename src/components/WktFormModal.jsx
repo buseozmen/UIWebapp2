@@ -7,6 +7,13 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
   const [name, setName] = useState("");
   const [wkt, setWkt] = useState("");
 
+
+  const handleClose = () => {
+  setName("");
+  setWkt("");
+  onClose();
+  };
+
   useEffect(() => {
   if (currentItem) {
     setName(currentItem.name || "");
@@ -34,6 +41,10 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
     // Eğer yeni kayıt ve harita üzerinden çizim geldiyse formu onunla doldur
     setWkt(mapWkt || "");
   }
+  return () => {
+    setName("");
+    setWkt("");
+  };
 }, [currentItem, mapWkt]);
 
 
@@ -62,9 +73,7 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
 
       onSaved();   // Listeyi yenile
       window.dispatchEvent(new Event("wkt-draw-cancel")); // geçici çizimi temizle
-      onClose();   // Modalı kapat
-      setName("");
-      setWkt("");
+      handleClose();
     } catch (error) {
       toast.error(error.message);
     }
@@ -94,7 +103,7 @@ function WktFormModal({ isOpen, onClose, onSaved, currentItem, mapWkt }) {
           <div className="modal-buttons">
             <button type="submit">{currentItem ? "Güncelle" : "Kaydet"}</button>
             <button type="button" className="cancel" onClick={() => {
-                onClose();
+                handleClose();
                 window.dispatchEvent(new Event("wkt-draw-cancel"))}}>İptal</button>
           </div>
         </form>

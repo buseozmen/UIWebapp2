@@ -27,7 +27,6 @@ function MapView({ onWktGenerated, refreshKey, shouldClearTempFeature }) {
   const popupRef = useRef();
   const overlayRef = useRef();
 
-
   const featureStyleFunction = (feature) => {
     return new Style({
       stroke: new Stroke({
@@ -154,7 +153,7 @@ function MapView({ onWktGenerated, refreshKey, shouldClearTempFeature }) {
             const feature = format.readFeature({
               type: "Feature",
               geometry: item.wkt,
-              properties: {} // eğer name gibi şeyleri de göstermek istersen buraya ekle
+              properties: {} 
             }, {
               dataProjection: "EPSG:4326",
               featureProjection: "EPSG:3857",

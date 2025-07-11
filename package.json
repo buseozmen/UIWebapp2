@@ -12,8 +12,10 @@
     "datatables.net-react": "^1.0.1",
     "ol": "^10.6.1",
     "react": "^19.1.0",
+    "react-data-table-component": "^7.7.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.10.1",
     "react-toastify": "^11.0.5",
     "sweetalert2": "^11.22.2",
     "web-vitals": "^2.1.4"

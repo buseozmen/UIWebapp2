@@ -48,7 +48,7 @@ function App() {
       </div>
       <WktFormModal
         isOpen={modalOpen}
-        onClose={() => { setModalOpen(false); setSelected(null);  window.dispatchEvent(new Event("wkt-draw-cancel")); }}
+        onClose={() => { setModalOpen(false); setSelected(null); setWkt("");  window.dispatchEvent(new Event("wkt-draw-cancel")); }}
         onSaved={refresh}
         currentItem={selected}
         mapWkt={wkt}
